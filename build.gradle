@@ -11,6 +11,7 @@ plugins {
 
 ext {
     openApiVersion = "2.1.0"
+    apachePoiVersion = "5.2.3"
     postgresContainerVersion = "1.19.0"
 }
 
@@ -62,6 +63,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-logging"
 
     implementation "org.postgresql:postgresql"
+    implementation "org.apache.poi:poi:$apachePoiVersion"
+    implementation "org.apache.poi:poi-ooxml:$apachePoiVersion"
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:$openApiVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"

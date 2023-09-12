@@ -10,8 +10,7 @@ import jakarta.persistence.Index
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import ru.romanow.product.holder.entity.enums.CurrencyNames
-import java.math.BigDecimal
+import ru.romanow.product.holder.entity.enums.CurrencyName
 import java.time.LocalDateTime
 
 @Entity
@@ -27,10 +26,10 @@ data class Product(
     var name: String? = null,
 
     @Column(name = "price", nullable = false)
-    var price: BigDecimal? = null,
+    var price: Double? = null,
 
     @Column(name = "currency", nullable = false)
-    var currency: CurrencyNames? = null,
+    var currency: CurrencyName? = null,
 
     @CreatedDate
     @Column(name = "created", nullable = false, updatable = false)

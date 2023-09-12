@@ -12,7 +12,7 @@ import jakarta.persistence.Index
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import ru.romanow.product.holder.entity.enums.CurrencyNames
+import ru.romanow.product.holder.entity.enums.CurrencyName
 import java.time.LocalDateTime
 
 @Entity
@@ -29,7 +29,7 @@ data class Currency(
 
     @Column(name = "name", nullable = false)
     @Enumerated(EnumType.STRING)
-    var name: CurrencyNames? = null,
+    var name: CurrencyName? = null,
 
     @Column(name = "value", nullable = false)
     var value: Double? = null,

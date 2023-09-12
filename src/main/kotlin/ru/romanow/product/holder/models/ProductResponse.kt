@@ -1,12 +1,12 @@
 package ru.romanow.product.holder.models
 
-import java.math.BigDecimal
+import ru.romanow.product.holder.entity.enums.CurrencyName
 import java.time.LocalDateTime
-import java.util.*
 
 data class ProductResponse(
-    var name: BigDecimal? = null,
-    var price: BigDecimal? = null,
-    var currency: Currency? = null,
+    var name: String? = null,
+    var price: Double? = null,
+    var actualPrice: Double? = null,
+    var currency: CurrencyName? = null,
     var created: LocalDateTime? = null
 )

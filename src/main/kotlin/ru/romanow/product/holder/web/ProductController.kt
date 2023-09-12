@@ -25,6 +25,6 @@ class ProductController(
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/upload", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun upload(@RequestParam file: MultipartFile) {
-        productService.upload(file)
+        productService.upload(file.resource.inputStream)
     }
 }

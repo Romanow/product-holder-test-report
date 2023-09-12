@@ -7,16 +7,15 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.client.RestTemplate
 import ru.romanow.product.holder.config.properties.CurrenciesProperties
 import ru.romanow.product.holder.entity.Currency
-import ru.romanow.product.holder.entity.enums.CurrencyNames
+import ru.romanow.product.holder.entity.enums.CurrencyName
 import ru.romanow.product.holder.models.CurrenciesResponse
-import ru.romanow.product.holder.repository.CurrencyRepository
 import java.util.concurrent.TimeUnit
 
 @Service
 @ConditionalOnProperty(value = ["application.currencies.enabled"], havingValue = "true", matchIfMissing = false)
 class CurrenciesProvider(
     private val currenciesProperties: CurrenciesProperties,
-    private val currencyRepository: CurrencyRepository,
+    private val currencyService: CurrencyService,
     private val restTemplate: RestTemplate
 ) {
 
@@ -30,12 +29,12 @@ class CurrenciesProvider(
         val response = restTemplate
             .getForObject(currenciesProperties.provider, CurrenciesResponse::class.java)!!
 
-        val currencies = CurrencyNames
+        val currencies = CurrencyName
             .values()
             .filter { it != response.base }
             .map { Currency(name = it, value = response.rates?.get(it.name)) }
             .toList()
 
-        currencyRepository.saveAll(currencies)
+        currencyService.saveAll(currencies)
     }
 }

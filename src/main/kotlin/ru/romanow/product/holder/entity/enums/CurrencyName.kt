@@ -1,5 +1,5 @@
 package ru.romanow.product.holder.entity.enums
 
-enum class CurrencyNames {
+enum class CurrencyName {
     USD, EUR, RUB
 }
