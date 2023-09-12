@@ -1,0 +1,26 @@
+{
+  "properties": [
+    {
+      "name": "application.currencies.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable job to fetch actual currencies."
+    },
+    {
+      "name": "application.currencies.provider",
+      "type": "java.lang.String",
+      "description": "URL to fetch actual currencies."
+    },
+    {
+      "name": "application.currencies.init-delay",
+      "type": "java.lang.String",
+      "description": "Init timeout before requests.",
+      "defaultValue": 10
+    },
+    {
+      "name": "application.currencies.request-delay",
+      "type": "java.lang.String",
+      "description": "Timeout before requests.",
+      "defaultValue": 60000
+    }
+  ]
+}

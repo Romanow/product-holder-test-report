@@ -1,5 +1,9 @@
-server:
-  port: 8080
+application:
+  currencies:
+    enabled: true
+    init-delay: 10
+    request-delay: 60000
+    provider: https://www.cbr-xml-daily.ru/latest.js
 
 spring:
   profiles.active: local
