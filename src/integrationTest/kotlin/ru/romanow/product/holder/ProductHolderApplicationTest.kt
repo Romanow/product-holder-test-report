@@ -22,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional
 import ru.romanow.product.holder.config.DatabaseTestConfiguration
 import ru.romanow.product.holder.entity.Currency
 import ru.romanow.product.holder.entity.enums.CurrencyName
+import ru.romanow.product.holder.entity.enums.CurrencyName.CNY
+import ru.romanow.product.holder.entity.enums.CurrencyName.EUR
+import ru.romanow.product.holder.entity.enums.CurrencyName.USD
 import ru.romanow.product.holder.repository.CurrencyRepository
 import java.util.stream.Stream
 
@@ -41,7 +44,7 @@ class ProductHolderApplicationTest {
 
     @BeforeEach
     fun init() {
-        val currencies = mapOf(CurrencyName.USD to USD_VALUE, CurrencyName.EUR to EUR_VALUE)
+        val currencies = mapOf(USD to USD_VALUE, CNY to CNY_VALUE, EUR to EUR_VALUE)
         currencyRepository
             .saveAllAndFlush(currencies.map { Currency(name = it.key, value = it.value) })
 
@@ -72,16 +75,19 @@ class ProductHolderApplicationTest {
     companion object {
         private const val USD_VALUE = 2.0
         private const val EUR_VALUE = 3.0
+        private const val CNY_VALUE = 1.5
 
         private const val MERCEDES_PRODUCT = "Mercedes GLA 250"
         private const val BMW_PRODUCT = "BMW X3"
         private const val LEGO_PRODUCT = "Lego Technic 42260"
+        private const val LIEBHERR_PRODUCT = "Lego Technic Liebherr LR13000"
 
         @JvmStatic
         fun argumentProvider(): Stream<Arguments> = Stream.of(
             of(MERCEDES_PRODUCT, CurrencyName.RUB, 22500.0), // 45.000 USD
-            of(BMW_PRODUCT, CurrencyName.USD, 40000.0), // 60.000 EUR
-            of(LEGO_PRODUCT, CurrencyName.USD, 39800.0) // 19900 RUB
+            of(BMW_PRODUCT, USD, 40000.0), // 60.000 EUR
+            of(LEGO_PRODUCT, USD, 39800.0), // 19900 RUB
+            of(LIEBHERR_PRODUCT, CNY, 599.25) // 799 USD
         )
     }
 }
