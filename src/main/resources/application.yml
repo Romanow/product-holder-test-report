@@ -1,9 +1,9 @@
 application:
   currencies:
-    enabled: true
-    init-delay: 10
-    request-delay: 60000
-    provider: https://www.cbr-xml-daily.ru/latest.js
+    enabled: ${CURRENCY_SYNC_ENABLED:true}
+    init-delay: ${CURRENCY_INIT_REQUEST_DELAY:10}
+    request-delay: ${CURRENCY_REQUEST_DELAY:60000}
+    provider: ${CURRENCY_PROVIDER:https://www.cbr-xml-daily.ru/latest.js}
 
 spring:
   profiles.active: local

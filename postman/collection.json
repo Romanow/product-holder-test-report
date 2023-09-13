@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "05049869-f153-4db4-9846-683254f18ca4",
+		"name": "[work] Product Holder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "976707"
+	},
+	"item": [
+		{
+			"name": "[success] Upload products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Upload products file\", function() {",
+							"    pm.response.to.have.status(202)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "postman/excel/products.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/products/upload",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[success] Get product info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get product info\", function () {",
+							"    pm.response.to.have.status(200)",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eq(\"application/json\");",
+							"",
+							"    const productName = pm.environment.get(\"productName\")",
+							"    const currency = pm.environment.get(\"currency\")",
+							"    const exchangeRates = pm.collectionVariables.get(\"exchangeRates\")",
+							"    const response = pm.response.json();",
+							"",
+							"    const expectedPrice = 45000 / exchangeRates.USD * exchangeRates.EUR",
+							"    pm.expect(response.name).to.be.eq(productName)",
+							"    pm.expect(response.currency).to.be.eq(currency)",
+							"    pm.expect(response.price).to.be.eq(expectedPrice)",
+							"    pm.expect(response.actualPrice).to.be.eq(expectedPrice)",
+							"    pm.expect(response.created).to.be.not.null",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/products/{{productName}}?currency={{currency}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"{{productName}}"
+					],
+					"query": [
+						{
+							"key": "currency",
+							"value": "{{currency}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.sendRequest(\"https://www.cbr-xml-daily.ru/latest.js\", (error, response) => {",
+					"    const json = response.json()",
+					"    exchangeRates = {\"USD\": json.rates.USD, \"EUR\": json.rates.EUR}",
+					"    pm.collectionVariables.set(\"exchangeRates\", exchangeRates)",
+					"})"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "exchangeRates",
+			"value": ""
+		}
+	]
+}

@@ -18,5 +18,23 @@ services:
       - postgres:/var/lib/postgresql/data
       - ./postgres/:/docker-entrypoint-initdb.d/
 
+  product-holder:
+    build: .
+    image: romanowalex/product-holder:v1.0
+    container_name: product-holder
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CURRENCY_INIT_REQUEST_DELAY: 0
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: [ "CMD", "curl", "--silent", "--fail", "http://localhost:8080/manage/health" ]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres:
