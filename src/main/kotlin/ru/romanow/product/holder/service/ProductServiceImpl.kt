@@ -65,7 +65,7 @@ class ProductServiceImpl(
         }
     }
 
-    private fun convert(
+    fun convert(
         price: Double,
         baseCurrency: CurrencyName,
         targetCurrency: CurrencyName,

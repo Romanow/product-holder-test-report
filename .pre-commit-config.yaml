@@ -17,7 +17,8 @@ repos:
     rev: v1.5.4
     hooks:
       - id: remove-crlf
+        exclude: '\.key$'
       - id: remove-tabs
-        exclude: 'postman/.*'
+        exclude: '(postman/.*|\.key$)'
         exclude_types:
           - markdown
